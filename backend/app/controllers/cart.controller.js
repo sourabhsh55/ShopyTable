@@ -1,7 +1,7 @@
 const { Carts } = require("../models/cartModel");
 const { Products } = require("../models/productModel");
 
-// its a comment
+// its a comment------
 
 module.exports.allProducts = async(req,res)=>{
     const user_email = req.query.email;
