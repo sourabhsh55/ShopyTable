@@ -1,6 +1,8 @@
 const { Carts } = require("../models/cartModel");
 const { Products } = require("../models/productModel");
 
+// its a comment
+
 module.exports.allProducts = async(req,res)=>{
     const user_email = req.query.email;
     const userExists = await Carts.findOne({user_email:user_email}).populate('items');
