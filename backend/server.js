@@ -4,18 +4,17 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const productRoute = require("./app/routes/product.route");
-// const ordersRoute = require("./app/routes/orders.route");
-// const usersRoute = require("./app/routes/users.route");
+const ordersRoute = require("./app/routes/orders.route");
+const cartsRoute = require("./app/routes/carts.route");
 const authRoute = require("./app/routes/auth.route");
-// const {Users} = require("./app/models/userModel");
 
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 
 app.use("/products",productRoute);
-// app.use("/orders",ordersRoute);
-// app.use("/users",usersRoute);
+app.use("/orders",ordersRoute);
+app.use("/carts",cartsRoute);
 app.use("/auth",authRoute);
 
 
@@ -26,7 +25,6 @@ mongoose.connect('mongodb://127.0.0.1/ShopyTable',{ useNewUrlParser: true,useUni
 
 //----------------------------------------------------------------------------
 app.get("/",(req,res)=>{
-    // console.log(req.body);
     res.send("hello world!");
 });
 
