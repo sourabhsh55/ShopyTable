@@ -4,13 +4,13 @@ const { Products } = require("../models/productModel");
 // its a comment------
 
 module.exports.allProducts = async(req,res)=>{
-    const user_email = req.query.email;
+    const user_email = req.body.email;
     console.log("user_email : ",user_email);
     const userExists = await Carts.findOne({user_email:user_email}).populate('items').select('Qty items -_id');
     // const userExists = await Carts.find({});.select('Qty items')
 
     if(!userExists){
-        res.status(400).send("empty!");
+        res.status(400).json({message:"cart is empty!"});
         return;
     }
     res.status(201).json({items:userExists});
@@ -68,14 +68,30 @@ module.exports.addProduct = async(req,res)=>{
 
 module.exports.deleteProduct = async(req,res)=>{
     const productID = req.body.productID;
-    const email = req.body.email;
+    const user_email = req.body.email;
+
+    console.log("recieved : ",req.body);
 
     const user_Exists = await Carts.findOne({user_email:user_email});
     if(!user_Exists){
         return res.sendStatus(404);
     }
 
-    user_Exists.items = user_Exists.items.filter(item=> item!=productID);
+    let new_items = [];
+    let new_Qty = [];
+
+    let len = user_Exists.items.length;
+    for(let i=0;i<len;i++){
+        if(user_Exists.items[i]!=productID){
+            new_items.push(user_Exists.items[i]);
+            new_Qty.push(user_Exists.Qty[i]);
+        }
+    }
+
+
+    // user_Exists.items = user_Exists.items.filter(item=> item!=productID);
+    user_Exists.items = new_items;
+    user_Exists.Qty = new_Qty;
     const cart_changed = await user_Exists.save();
     res.status(200).json({cart:cart_changed});
     return;
