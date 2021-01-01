@@ -13,7 +13,7 @@ module.exports.register = async(req,res)=>{
 
     const isRegistered = await Users.findOne({email:Email});
     if(isRegistered){
-        res.status(422).send("User already exists!");
+        res.status(422).json({message:"User already exists!"});
         return;
     }
 
