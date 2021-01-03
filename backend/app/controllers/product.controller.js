@@ -1,6 +1,7 @@
 const { Products } = require("../models/productModel");
 
 module.exports.allProducts = async(req,res)=>{
+    console.log("call is made on /allProducts");
     const productData = await Products.find();
     if(!productData){
         res.send("no product found!");
@@ -38,7 +39,7 @@ module.exports.addProduct = async(req,res)=>{
 
 module.exports.getProductID = async(req,res)=>{
     const productID = req.params.id;
-    console.log(`id : ${productID}`);
+    console.log(`iD : ${productID}`);
     const productFound = await Products.findOne({_id:productID});
     console.log(productFound);
     if(!productFound){
