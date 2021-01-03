@@ -22,6 +22,10 @@ const userSchema = new mongoose.Schema({
     role:{
         type:String,
         default:"customer"
+    },
+    refresh_token:{
+        type:String,
+        default:""
     }
 });
 
