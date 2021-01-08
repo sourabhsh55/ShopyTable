@@ -7,12 +7,13 @@ module.exports.allProducts = async(req,res)=>{
     const user_email = req.body.email;
     console.log("user_email : ",user_email);
     const userExists = await Carts.findOne({user_email:user_email}).populate('items').select('Qty items -_id');
-    // const userExists = await Carts.find({});.select('Qty items')
 
     if(!userExists){
-        res.status(400).json({message:"cart is empty!"});
+        // res.status(400).json({error:"cart is empty!"});
+        res.json({items:{items:[],Qty:[]}});
         return;
     }
+    console.log(userExists);
     res.status(201).json({items:userExists});
     return;
 };

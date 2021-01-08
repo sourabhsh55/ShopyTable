@@ -1,10 +1,11 @@
 const { Orders } = require("../models/orderModel");
 
 module.exports.allOrders = async(req,res)=>{
-    const user_email = req.query.email;
-    const userExists = await Orders.findOne({user_email:user_email});
+    const user_email = req.body.email;
+    console.log("orders of : ",user_email);
+    const userExists = await Orders.findOne({email:user_email});
     if(!userExists){
-        res.status(400).send("empty!");
+        res.json({ORDERS:[]});
         return;
     }
 
@@ -58,7 +59,7 @@ module.exports.updateOrder = async(req,res)=>{
 
     const user_Exists = await Orders.findOne({email:user_email});
     if(!user_Exists){
-        return res.json({message:"user not found"});
+        return res.json({error:"user not found"});
     }
 
     const len = user_Exists.orders.length;
@@ -70,6 +71,6 @@ module.exports.updateOrder = async(req,res)=>{
             return;
         }
     }
-    res.json({message:"no changes made"});
+    res.json({error:"no changes made"});
     return;
 }

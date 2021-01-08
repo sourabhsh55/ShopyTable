@@ -13,7 +13,7 @@ module.exports.register = async(req,res)=>{
 
     const isRegistered = await Users.findOne({email:Email});
     if(isRegistered){
-        res.status(422).json({message:"User already exists!"});
+        res.status(422).json({error:"User already exists!"});
         return;
     }
 
@@ -28,11 +28,11 @@ module.exports.register = async(req,res)=>{
         });
 
         const reg_user = await new_user.save();
-        res.status(201).json({"registered user":reg_user});
+        res.status(201).json({message:reg_user});
         return;
     }
     catch{
-        res.status(500).send("~ERROR : 00AUTH/register");
+        res.status(500).json({error:"~ERROR : 00AUTH/register"});
         return;
     }
 }
@@ -46,7 +46,7 @@ module.exports.login = async(req,res)=>{
     const isRegistered = await Users.findOne({email:Email});
 
     if(!isRegistered){
-        res.status(401).send("User doesn't exists!");
+        res.status(401).json({error:"User doesn't exists!"});
         return;
     }
 
@@ -55,7 +55,7 @@ module.exports.login = async(req,res)=>{
         const isPasswordCorrect = await bcrypt.compare(Password,correctPassword);
         console.log(isPasswordCorrect);
         if(!isPasswordCorrect){
-            res.status(401).send("you have entered a wrong password!");
+            res.status(401).json({error:"you have entered a wrong password!"});
             return;
         }
 
@@ -74,7 +74,7 @@ module.exports.login = async(req,res)=>{
         return;
     }
     catch{
-        res.send("~ERROR : 00AUTH/login");
+        res.json({error:"~ERROR : 00AUTH/login"});
         return;
     }
 }
@@ -109,7 +109,12 @@ module.exports.logout = async(req,res)=>{
     const userFound = await Users.findOne({email:Email});
     userFound.refresh_token="";
     await userFound.save();
-    res.send("logout!");
+    res.json({message:"logged out"});
+    return;
+}
+
+module.exports.isAdmin = async(req,res)=>{
+    res.json({message:"admin"});
     return;
 }
 
