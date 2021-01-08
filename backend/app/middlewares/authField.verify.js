@@ -9,7 +9,7 @@ module.exports.verifyRegister_LoginField = (req,res,next)=>{
     });
     const result = schema.validate(req.body);
     if(result.error){
-        res.json({message:result.error.details[0].message});
+        res.json({error:result.error.details[0].message});
         return;
     }
     next();
@@ -23,7 +23,7 @@ module.exports.verifynewAccessTokenField = (req,res,next)=>{
     });
     const result = schema.validate(req.body);
     if(result.error){
-        res.send(result.error.details[0].message);
+        res.json({error:result.error.details[0].message});
         return;
     }
     next();
@@ -35,7 +35,7 @@ module.exports.verifyLogoutField = (req,res,next)=>{
     });
     const result = schema.validate(req.body);
     if(result.error){
-        res.send(result.error.details[0].message);
+        res.json({error:result.error.details[0].message});
         return;
     }
     next();

@@ -10,7 +10,7 @@ module.exports.verifyProductIDField = (req,res,next)=>{
 
     const result = schema.validate(req.params);
     if(result.error){
-        res.send(result.error.details[0].message);
+        res.json({error:result.error.details[0].message});
         return;
     }
     console.log("id is correct");
@@ -26,11 +26,12 @@ module.exports.verifyAddProductField = (req,res,next)=>{
         price:Joi.number().required(),
         countInStock:Joi.number().required(),
         rating:Joi.number().required(),
+        image:Joi.string().required()
     });
 
     const result = schema.validate(req.body);
     if(result.error){
-        res.send(result.error.details[0].message);
+        res.json({error:result.error.details[0].message});
         return;
     }
     next();

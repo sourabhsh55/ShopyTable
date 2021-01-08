@@ -7,15 +7,13 @@ module.exports.verifyAddOrder = (req,res,next)=>{
         pincode:Joi.number().required(),
         totalCost:Joi.number().required(),
         isDelievered:Joi.boolean(),
-        // Qty:Joi.array().required(),
-        // items_id:Joi.array().required()
         Qty:Joi.array().items(Joi.number()),
         items_id:Joi.array().items(Joi.string())
     });
 
     const result = schema.validate(req.body);
     if(result.error){
-        res.json({message:result.error.details[0].message});
+        res.json({error:result.error.details[0].message});
         return;
     }
     next();
