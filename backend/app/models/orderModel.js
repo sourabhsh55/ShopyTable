@@ -13,9 +13,10 @@ const orderSchema = new mongoose.Schema({
             totalCost:{type:Number,required:true},
             items_id : {type:Array,required:true},
             Qty:{type:Array,required:true},
+            time : { type : Date, default: Date.now() }
         }
     ]
-
+    
 })
 
 const Orders = mongoose.model('Orders',orderSchema);
