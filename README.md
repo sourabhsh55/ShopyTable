@@ -11,8 +11,9 @@
     3) Create .env file in the backend folder
         ** Add following lines to that file.
 
-        JWT_SECRET=secretkey@1
-        MONGODB_URL=mongodb://localhost/ShopyTable
+        ACCESS_TOKEN_SECRET=giveanykeyhere1
+        REFRESH_TOKEN_SECRET=giveanykeyhere2
+        MONGODB=mongodb://127.0.0.1
     
     4) Run frontend
         $ cd frontend
