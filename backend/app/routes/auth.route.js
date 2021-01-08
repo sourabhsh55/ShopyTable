@@ -1,6 +1,7 @@
 const express = require("express");
 const authRoute = express.Router();
 const controller = require("../controllers/auth.controller.js");
+const { isAdmin, isAuth } = require("../middlewares/auth.verify.js");
 const {
     verifyRegister_LoginField,
     verifynewAccessTokenField,
@@ -14,10 +15,13 @@ authRoute.post("/register",verifyRegister_LoginField,controller.register);
 authRoute.post("/login",verifyRegister_LoginField,controller.login);
 
 // NewAccessToken
-authRoute.post("/newAccessToken",verifynewAccessTokenField,controller.newAccessToken);
+authRoute.post("/newAccessToken",isAuth,verifynewAccessTokenField,controller.newAccessToken);
 
 // Logout
 authRoute.delete("/logout",verifyLogoutField,controller.logout);
+
+// IsAdmin
+authRoute.post('/isAdmin',isAuth,isAdmin,controller.isAdmin);
 
 //Export module
 module.exports = authRoute;

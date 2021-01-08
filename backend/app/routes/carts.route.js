@@ -1,7 +1,7 @@
 const express = require("express");
 const cartRouter = express.Router();
 const controller = require("../controllers/cart.controller");
-const {isAuth} = require("../middlewares/auth.verify");
+const {isAuth, isAdmin} = require("../middlewares/auth.verify");
 const{
     verifyAllProductField,
     verifyAddProductField,

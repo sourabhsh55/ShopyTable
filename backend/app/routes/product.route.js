@@ -1,7 +1,7 @@
 const express = require("express");
 const productRouter = express.Router();
 const controller = require("../controllers/product.controller");
-const { isAuth } = require("../middlewares/auth.verify");
+const { isAuth, isAdmin } = require("../middlewares/auth.verify");
 const {
     verifyProductIDField,
     verifyAddProductField
@@ -12,13 +12,12 @@ productRouter.get("/allProducts",controller.allProducts);
 
 // Add Product
 productRouter.post("/addProduct",verifyAddProductField,isAuth,controller.addProduct);
-// productRouter.post("/addProduct",controller.addProduct);
 
 // Product : ID
 productRouter.get("/:id",verifyProductIDField,controller.getProductID);
 
 // Delete Product : ID
-productRouter.delete("/:id",verifyProductIDField,isAuth,controller.deleteProductID);
+productRouter.delete("/:id",verifyProductIDField,isAuth,isAdmin,controller.deleteProductID);
 
 
 // Export module
