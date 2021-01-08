@@ -1,4 +1,5 @@
 import {getLoggedIn} from "../api.js";
+import { store_token, getUser } from "../localStorage.js";
 
 const SigninScreen = {
 
@@ -17,29 +18,46 @@ const SigninScreen = {
                 password:password
             };
             const tokens = await getLoggedIn(info);
-            //save these tokens inside the localStorage.
+            if(tokens.error){
+              alert(`${tokens.error}`)
+            }
+            else{
+              store_token({
+                Access_Token:tokens.accessToken,
+                Refresh_Token:tokens.refreshToken,
+                Username:name,
+                Email:email
+              });
+              document.location.hash = "/";
+            }
         })
     },
     render: () => {
 
+      const name = localStorage.getItem("Username");
+      if(name){
+        document.location.hash = '/';
+      }
+
         return `
         <div class="form-container">
-          <form id="signin-form">
+        <form id="signin-form">
             <ul class="form-items">
               <li>
                 <h1>Sign-In</h1>
               </li>
+              
               <li>
-              <label for="name">Name</label>
-              <input type="name" name="name" id="name" />
+              <label for="name" required>Name</label>
+              <input type="name" name="name" id="name" required/>
               </li>
               <li>
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" />
+                <input type="email" name="email" id="email" required/>
               </li>
               <li>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" />
+                <input type="password" name="password" id="password" required/>
               </li>
               <li>
                 <button type="submit" id="Signin-btn" class="primary">Signin</button>
@@ -50,9 +68,11 @@ const SigninScreen = {
                   <a href="/#/register">Create your account </a>
                 </div>
               </li>
+              
             </ul>
-          </form>
+            </form>
         </div>
+        
         `;
       },
 }
