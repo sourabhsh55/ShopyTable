@@ -56,8 +56,4 @@
     - Watch orders of all the users
 
 
-<<<<<<< HEAD
 #### HTML,CSS => thanks to youtube~videos and stackoverflow.
-=======
-#### HTML,CSS => thanks to youtube~videos and stackoverflow.
->>>>>>> 7c955ed134342629ea90763425f02424caf1f3bc
