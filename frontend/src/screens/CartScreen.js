@@ -1,4 +1,4 @@
-import { delCartItem, getCartItems, placeOrder } from "../api.js";
+import { delCartItem, getCartItems, getNewAccessToken, placeOrder } from "../api.js";
 import { rerender } from "../utils.js";
 
 
@@ -23,11 +23,11 @@ const CartScreen = {
         const placeOrder_btn = document.getElementById("checkout-button");
         if(placeOrder_btn){
             placeOrder_btn.addEventListener("click",async(e)=>{
+                e.preventDefault();
                 const address = document.getElementById("address").value;
                 const pincode = document.getElementById("pincode").value;
-        
-                console.log(`${address} + ${pincode}`);
-        
+                        
+                // adding all the items of cart into obj
                 obj.items.items.map((item=>Items_id_list.push(item._id)));
         
                 const order_details = {
@@ -39,13 +39,16 @@ const CartScreen = {
                 }
 
                 var ordered_items = await placeOrder(order_details);
-                if(ordered_items.error){
-                    alert(`${ordered_items.error}`);
-                }
-                ordered_items = ordered_items.reg_item;
-                const orders_list = ordered_items.orders;
-                const order_id = orders_list[orders_list.length-1]._id;
-                await setTimeout(()=>{},1000);
+
+                // **for checking the ordering problems...
+                // if(ordered_items.error){
+                //     alert(`${ordered_items.error}`);
+                // }
+                // ordered_items = ordered_items.reg_item;
+                // const orders_list = ordered_items.orders;
+                // const order_id = orders_list[orders_list.length-1]._id;
+                // await setTimeout(()=>{},1000);
+
                 document.location.hash = '/profile';
 
             })
@@ -60,9 +63,17 @@ const CartScreen = {
 
         obj = await getCartItems();
 
-        if(obj.error){
-            return `<div><h2>${obj.error}</h2></div>`;
+        // if token is expired and make a request at the backend for the new Access_Token
+        if(obj.error === "jwt expired" || obj.error == "invalid token" || obj.error == "invalid signature"){
+            const newToken = await getNewAccessToken();
+            if(newToken.error){
+                document.location.hash = '/';
+                return;
+            }
+            localStorage.setItem("Access_Token",newToken.token);
+            obj = await getCartItems();
         }
+
         let {items:cartItems,Qty} = obj;
         console.log(cartItems);
 
