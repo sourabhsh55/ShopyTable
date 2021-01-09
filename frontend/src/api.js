@@ -49,7 +49,7 @@ export const getRegistered = async(info)=>{
         method:'POST',
         body:JSON.stringify(info)
     };
-    console.log("info of user : ",info);
+    // console.log("info of user : ",info);
 
     var obj;
     await fetch(url,params)
@@ -57,7 +57,7 @@ export const getRegistered = async(info)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log("data : ",data);
+        // console.log("data : ",data);
         obj = data;
     })
     return obj;
@@ -72,7 +72,7 @@ export const getLoggedIn = async(info)=>{
         method:'POST',
         body:JSON.stringify(info)
     };
-    console.log("info of user : ",info);
+    // console.log("info of user : ",info);
 
     var obj;
     await fetch(url,params)
@@ -80,7 +80,7 @@ export const getLoggedIn = async(info)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log("Tokens : ",data);
+        // console.log("Tokens : ",data);
         obj = data;
     })
     return obj;
@@ -104,7 +104,7 @@ export const getCartItems = async()=>{
         return response.json();
     })
     .then((data)=>{
-        // console.log(data);
+        // console.log("~data : ",data);
         obj = data;
     });
     return obj;
@@ -134,7 +134,7 @@ export const delCartItem = async(id)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log(data);
         obj = data;
     });
     return obj;
@@ -165,7 +165,7 @@ export const addCartItem = async(product_info)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log(data);
         obj = data;
     });
     return obj;
@@ -194,7 +194,7 @@ export const placeOrder = async(order_details)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log(data);
         obj = data;
     });
     return obj;
@@ -219,7 +219,7 @@ export const getAllOrders = async()=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log("~data : ",data);
         obj = data;
     });
     return obj;
@@ -249,7 +249,7 @@ export const updateOrder = async(id)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log(data);
         obj = data;
     });
     return obj;
@@ -277,7 +277,7 @@ export const newProduct = async(product_info)=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log(data);
         obj = data;
     });
     return obj;
@@ -307,8 +307,37 @@ export const checkIsAdmin = async()=>{
         return response.json();
     })
     .then((data)=>{
-        console.log(data);
+        // console.log(data);
         obj = data;
     })
     return obj;
-}
+};
+
+export const getNewAccessToken = async()=>{
+    const url = "http://localhost:5000/auth/newAccessToken";
+
+    const data = {
+        email:localStorage.getItem("Email"),
+        username:localStorage.getItem("Username"),
+        refreshToken : localStorage.getItem("Refresh_token")
+    }
+    
+    const params = {
+        headers : {
+            "Content-Type":"application/json",
+        },
+        method:"POST",
+        body : JSON.stringify(data)
+    }
+
+    var obj;
+    await fetch(url,params)
+    .then((response)=>{
+        return response.json();
+    })
+    .then((data)=>{
+        // console.log(data);
+        obj = data;
+    })
+    return obj;
+};
