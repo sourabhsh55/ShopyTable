@@ -73,7 +73,9 @@ const RegisterScreen = {
                         <a href="/#/signin">Sign-In </a>
                         </div>
                     </li>
-                
+                    <li>
+                    <div style="color:grey">Input fields is case sensitive </div>
+                    </li>
                 </ul>
             </form>
             </div>

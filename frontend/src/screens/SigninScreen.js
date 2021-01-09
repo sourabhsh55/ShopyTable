@@ -68,7 +68,9 @@ const SigninScreen = {
                   <a href="/#/register">Create your account </a>
                 </div>
               </li>
-              
+              <li>
+              <div style="color:grey">Input fields is case sensitive </div>
+              </li>
             </ul>
             </form>
         </div>
