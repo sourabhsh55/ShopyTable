@@ -17,9 +17,10 @@ module.exports.verifyRegister_LoginField = (req,res,next)=>{
 
 module.exports.verifynewAccessTokenField = (req,res,next)=>{
     const schema = Joi.object({
-        refreshToken:Joi.string().alphanum().min(3).max(200).required(),
+        refreshToken:Joi.string().min(3).max(200).required(),
         email:Joi.string().required(),
-        password:Joi.string().min(4).required()
+        username:Joi.string().required()
+        // password:Joi.string().min(4).required()
     });
     const result = schema.validate(req.body);
     if(result.error){
