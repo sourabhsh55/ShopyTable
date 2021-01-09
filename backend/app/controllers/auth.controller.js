@@ -43,7 +43,7 @@ module.exports.login = async(req,res)=>{
     const Email = req.body.email;
 
 
-    const isRegistered = await Users.findOne({email:Email});
+    const isRegistered = await Users.findOne({email:Email,username:Username});
 
     if(!isRegistered){
         res.status(401).json({error:"User doesn't exists!"});
@@ -84,10 +84,10 @@ module.exports.newAccessToken = async(req,res)=>{
     const Username = req.body.username;
     const Email = req.body.email;
 
-    if(!refreshToken){
-        res.send("you have not sent any refresh token");
-        return;
-    }
+    // if(!refreshToken){
+    //     res.json({"you have not sent any refresh token");
+    //     return;
+    // }
 
     const user_payLoad = {
         email:Email,
@@ -96,7 +96,7 @@ module.exports.newAccessToken = async(req,res)=>{
 
     const refreshAccessToken = await generateRefreshToken(user_payLoad,refreshToken,Email);
     if(refreshAccessToken.message){
-        res.send(refreshAccessToken.message);
+        res.json({error:refreshAccessToken.message});
         return;
     }
     res.json({token:refreshAccessToken});
@@ -121,7 +121,7 @@ module.exports.isAdmin = async(req,res)=>{
 
 // functions-------------------------------------------------------------------------------
 function generateAccessToken (payLoad) {
-    const token = jwt.sign(payLoad,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'10h'});
+    const token = jwt.sign(payLoad,process.env.ACCESS_TOKEN_SECRET,{expiresIn:'1h'});
     return token;
 };
 
