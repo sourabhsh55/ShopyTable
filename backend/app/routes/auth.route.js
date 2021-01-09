@@ -15,7 +15,7 @@ authRoute.post("/register",verifyRegister_LoginField,controller.register);
 authRoute.post("/login",verifyRegister_LoginField,controller.login);
 
 // NewAccessToken
-authRoute.post("/newAccessToken",isAuth,verifynewAccessTokenField,controller.newAccessToken);
+authRoute.post("/newAccessToken",verifynewAccessTokenField,controller.newAccessToken);
 
 // Logout
 authRoute.delete("/logout",verifyLogoutField,controller.logout);
