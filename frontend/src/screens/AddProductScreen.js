@@ -85,7 +85,11 @@ const AddProductScreen = {
                 </li>
                 <li>
                 <label for="image">Image</label>
+<<<<<<< HEAD
                     <input type="text" name="image" id="image" value="/images/product-.jpg"/>
+=======
+                    <input type="text" name="image" id="image" value="yo-yo-samosa.jpg"/>
+>>>>>>> 7c955ed134342629ea90763425f02424caf1f3bc
                 </li>
                 <li>
                     <button type="submit" id="submit-btn" class="primary">Register</button>
